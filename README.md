@@ -10,9 +10,9 @@ Import through URL down below:
 
 
 #Data Structure / Data Model
-We have two data model:
-  1:Data
-  2:Users
+  We have two data model:
+    1:Data
+    2:Users
   
   Data has:
     name: {type: String, required:true},
@@ -98,10 +98,43 @@ e.g : {
         updation or deletion wont work.
         
         For updating other fields(you want to update) can be included in json data send on request from client along with _id.
+  
+  // USE CASES CAN BE USED FOR "success" FIELD RETURNED ON EVERY ERROR FOR ANY ROUTE REQUEST. OR AND ON A "found" FIELD FROM DATA FOR A BETTER UX. 
         
-        
+    
         
       
+#For Back-end
+  *Every js file has comment explaining every step of our code*
+  
+      *We have our api folder containing our back-end application*
+      *Our api has folders: controllers, models, routes, utils
+      *Have index.js which is main application file*
+      
+  #index.js
+        We have every routes imported from routes folder here
+        We have make app listen on port 3000 with a callback of connect function that establish database connection
         
-      
-      
+  #controller folder
+        This folder has auth.js fil containing middleware for login and register.
+  
+  #models folder
+        This folder has two files by name Data.js and Users.js
+        Data.js contains schema & model for data of lostAndFound and Users.js contains schema & model for a user to be stored in database.
+  
+  #routes folder
+        This folder contains routes for different endpoints.
+        /api/auth is treated by routes in authUser.js file
+        /api/data is treated by routes in data.js
+  
+  #utils
+        This folder has a supporting createError.js function file and a supporting verifyUser middleware file.
+        createError throws error with status code and message equals to arguments passed to it. It return this error.
+        VerifyUser has two middleware: 
+            1) verifyToken: to verify token of a user logged in and forwared verified data as request to other middleware or methods.
+            2) verifyUser: calls verifyToken and verify the id of user with the id passed in parameters.
+  
+  // YOU CAN REMOVE RESTRICTION OF ONLY USER GETTING DATA BY REMOVING "verifyUser" MIDDLEWARE FROM ARGUMENTS OF GET METHOD IN routes/data.js
+  // YOU CAN ALSO INSTEAD FOR EVERY DATA POSTED BY A USER STORE ID OF A USER IN "user" FIELD ALONGSIDE OTHER FIELDS, AND USE IT FOR THOROUGH CHECKING OF USER IN PUT        AND DELETE ROUTE METHODS.
+  
+  
